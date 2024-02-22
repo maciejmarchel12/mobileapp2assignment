@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Historical Landmarks Placemark</string>
+    <string name="button_addLandmark">Add Landmark</string>
+    <string name="hint_landmarkTitle">Landmark Title</string>
+    <string name="hint_landmarkDescription">Description</string>
 </resources>
