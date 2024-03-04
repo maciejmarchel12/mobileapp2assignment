@@ -7,7 +7,7 @@ import timber.log.Timber.i
 
 class MainApp : Application() {
 
-    val placemarks = ArrayList<PlacemarkModel>()
+    val landmarks = ArrayList<PlacemarkModel>()
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
