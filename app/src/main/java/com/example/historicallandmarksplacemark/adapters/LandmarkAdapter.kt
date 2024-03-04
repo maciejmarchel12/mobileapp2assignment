@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.historicallandmarksplacemark.databinding.CardLandmarkBinding
 import com.example.historicallandmarksplacemark.models.LandmarkModel
+import com.squareup.picasso.Picasso
 
 interface LandmarkListener {
     fun onLandmarkClick(landmark: LandmarkModel)
@@ -32,6 +33,7 @@ class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
         fun bind(landmark: LandmarkModel, listener: LandmarkListener) {
             binding.landmarkTitle.text = landmark.title
             binding.description.text = landmark.description
+            Picasso.get().load(landmark.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onLandmarkClick(landmark)}
         }
     }
