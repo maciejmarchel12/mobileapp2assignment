@@ -2,6 +2,9 @@ package com.example.historicallandmarksplacemark.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import com.example.historicallandmarksplacemark.R
 import com.example.historicallandmarksplacemark.databinding.ActivityHlBinding
 import com.example.historicallandmarksplacemark.main.MainApp
 import com.google.android.material.snackbar.Snackbar
@@ -12,25 +15,33 @@ import com.example.historicallandmarksplacemark.models.PlacemarkModel
 class HLActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHlBinding
-    var placemark = PlacemarkModel() //Model integration
+    var landmark = PlacemarkModel() //Model integration
     lateinit var app: MainApp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHlBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
 //        Timber.plant(Timber.DebugTree())
 //        i("Historical Landmark Activity started...")
 
         app = application as MainApp
         i("Historical Landmark Activity started...")
+
         binding.btnAdd.setOnClickListener() {
-            placemark.title = binding.landmarkTitle.text.toString()
-            placemark.description = binding.description.text.toString()
-            if (placemark.title.isNotEmpty()) {
-                app.placemarks.add(placemark.copy())
-                i("add button pressed: $placemark.title")
-                for (i in app.placemarks.indices)
-                    { i("Placemark[$i]:${this.app.placemarks[i]}")}
+            landmark.title = binding.landmarkTitle.text.toString()
+            landmark.description = binding.description.text.toString()
+            if (landmark.title.isNotEmpty()) {
+                app.landmarks.add(landmark.copy())
+                i("add button pressed: $landmark.title")
+                for (i in app.landmarks.indices)
+                    { i("Landmark[$i]:${this.app.landmarks[i]}")
+
+                        setResult(RESULT_OK)
+                        finish()
+                }
             }
             else {
                 Snackbar
@@ -39,5 +50,19 @@ class HLActivity : AppCompatActivity() {
             }
         //OLD    i("add button pressed")
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_landmark, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cancel -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
