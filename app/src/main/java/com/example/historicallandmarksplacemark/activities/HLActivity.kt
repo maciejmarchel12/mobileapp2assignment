@@ -15,6 +15,7 @@ import com.example.historicallandmarksplacemark.main.MainApp
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber.i
 import com.example.historicallandmarksplacemark.models.LandmarkModel
+import com.example.historicallandmarksplacemark.models.Location
 import com.squareup.picasso.Picasso
 
 @Suppress("DEPRECATION")
@@ -22,7 +23,9 @@ class HLActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHlBinding
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var landmark = LandmarkModel() //Model integration
+    var location = Location(52.245696, -7.139102, 15f) //Location
     lateinit var app: MainApp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,7 @@ class HLActivity : AppCompatActivity() {
         i("Historical Landmark Activity started...")
 
         registerImagePickerCallback()
+        registerMapCallback()
 
         //EDIT
         if (intent.hasExtra("landmark_edit")) {
@@ -68,9 +72,23 @@ class HLActivity : AppCompatActivity() {
                 finish()
             }
         }
+        //Map Button
         binding.chooseImage.setOnClickListener {
             i("Select image")
             showImagePicker(imageIntentLauncher)
+        }
+
+        //Location Button
+        binding.landmarkLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (landmark.zoom != 0f) {
+                location.lat =  landmark.lat
+                location.lng = landmark.lng
+                location.zoom = landmark.zoom
+            }
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
         }
         //OLD    i("add button pressed")
     }
@@ -101,6 +119,27 @@ class HLActivity : AppCompatActivity() {
                                    .into(binding.landmarkImage)
                             binding.chooseImage.setText(R.string.change_landmark_image)
                         } //end of if statement
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
+    //Map
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            i("Location == $location")
+                            landmark.lat = location.lat
+                            landmark.lng = location.lng
+                            landmark.zoom = location.zoom
+                        } // end of if statement
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }
