@@ -1,5 +1,8 @@
-<resources>
-    <string name="app_name">Historical Landmarks Placemark</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Historical Landmarks</string>
+
+    <!-- Landmark -->
+
     <string name="button_addLandmark">Add Landmark</string>
     <string name="hint_landmarkTitle">Landmark Title</string>
     <string name="hint_landmarkDescription">Description</string>
@@ -7,4 +10,17 @@
     <string name="menu_cancelLandmark">Cancel</string>
     <string name="enter_landmark_title">Enter a landmark title</string>
     <string name="save_landmark">Save Landmark</string>
+
+    <!-- Images -->
+
+    <string name="button_addImage"> Add Image </string>
+    <string name="select_landmark_image">Select Landmark Image</string>
+    <string name="change_landmark_image">Change Landmark Image</string>
+
+
+    <!-- Map -->
+    <string name="button_setLocation" tools:ignore="ExtraTranslation">Set Location</string>
+    <string name="title_activity_map" tools:ignore="ExtraTranslation">MapActivity</string>
+
+
 </resources>

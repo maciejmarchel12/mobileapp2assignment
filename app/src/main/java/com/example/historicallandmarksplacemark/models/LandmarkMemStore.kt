@@ -26,6 +26,10 @@ class LandmarkMemStore : LandmarkStore {
         if (foundLandmark != null) {
             foundLandmark.title = landmark.title
             foundLandmark.description = landmark.description
+            foundLandmark.image = landmark.image
+            foundLandmark.lat = landmark.lat
+            foundLandmark.lng = landmark.lng
+            foundLandmark.zoom = landmark.zoom
             logAll()
         }
     }

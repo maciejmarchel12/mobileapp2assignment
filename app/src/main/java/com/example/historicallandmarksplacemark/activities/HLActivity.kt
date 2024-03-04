@@ -1,21 +1,31 @@
 package com.example.historicallandmarksplacemark.activities
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.historicallandmarksplacemark.R
 import com.example.historicallandmarksplacemark.databinding.ActivityHlBinding
+import com.example.historicallandmarksplacemark.helpers.showImagePicker
 import com.example.historicallandmarksplacemark.main.MainApp
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber.i
 import com.example.historicallandmarksplacemark.models.LandmarkModel
+import com.example.historicallandmarksplacemark.models.Location
+import com.squareup.picasso.Picasso
 
 @Suppress("DEPRECATION")
 class HLActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHlBinding
+    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var landmark = LandmarkModel() //Model integration
+    var location = Location(52.245696, -7.139102, 15f) //Location
     lateinit var app: MainApp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +37,21 @@ class HLActivity : AppCompatActivity() {
         app = application as MainApp
         i("Historical Landmark Activity started...")
 
+        registerImagePickerCallback()
+        registerMapCallback()
+
         //EDIT
         if (intent.hasExtra("landmark_edit")) {
             edit = true
             landmark = intent.extras?.getParcelable("landmark_edit")!!
             binding.landmarkTitle.setText(landmark.title)
             binding.description.setText(landmark.description)
+            Picasso.get()
+                .load(landmark.image)
+                .into(binding.landmarkImage)
+            if (landmark.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_landmark_image)
+            }
             binding.btnAdd.setText(R.string.save_landmark)
         }
 
@@ -53,6 +72,24 @@ class HLActivity : AppCompatActivity() {
                 finish()
             }
         }
+        //Map Button
+        binding.chooseImage.setOnClickListener {
+            i("Select image")
+            showImagePicker(imageIntentLauncher)
+        }
+
+        //Location Button
+        binding.landmarkLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (landmark.zoom != 0f) {
+                location.lat =  landmark.lat
+                location.lng = landmark.lng
+                location.zoom = landmark.zoom
+            }
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
         //OLD    i("add button pressed")
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -65,6 +102,48 @@ class HLActivity : AppCompatActivity() {
             R.id.item_cancel -> { finish() }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    //Image
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got result ${result.data!!.data}")
+                            landmark.image = result.data!!.data!!
+                            Picasso.get()
+                                   .load(landmark.image)
+                                   .into(binding.landmarkImage)
+                            binding.chooseImage.setText(R.string.change_landmark_image)
+                        } //end of if statement
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
+    //Map
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            i("Location == $location")
+                            landmark.lat = location.lat
+                            landmark.lng = location.lng
+                            landmark.zoom = location.zoom
+                        } // end of if statement
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 }
 
