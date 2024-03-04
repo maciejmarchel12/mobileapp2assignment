@@ -11,10 +11,12 @@ import com.example.historicallandmarksplacemark.main.MainApp
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.historicallandmarksplacemark.adapters.LandmarkAdapter
+import com.example.historicallandmarksplacemark.adapters.LandmarkListener
 import com.example.historicallandmarksplacemark.databinding.ActivityLandmarkListBinding
+import com.example.historicallandmarksplacemark.models.LandmarkModel
 
 
-class LandmarkListActivity : AppCompatActivity() {
+class LandmarkListActivity : AppCompatActivity(), LandmarkListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityLandmarkListBinding
@@ -29,7 +31,8 @@ class LandmarkListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = LandmarkAdapter(app.landmarks)
+       // binding.recyclerView.adapter = LandmarkAdapter(app.landmarks)
+        binding.recyclerView.adapter = LandmarkAdapter(app.landmarks.findAll(),this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,7 +56,23 @@ class LandmarkListActivity : AppCompatActivity() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                        notifyItemRangeChanged(0,app.landmarks.size)
+                        notifyItemRangeChanged(0,app.landmarks.findAll().size)
+            }
+        }
+
+    override fun onLandmarkClick(landmark: LandmarkModel) {
+        val launcherIntent = Intent(this, HLActivity::class.java)
+        launcherIntent.putExtra("landmark_edit", landmark)
+        getClickResult.launch(launcherIntent)
+    }
+
+    private val getClickResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                (binding.recyclerView.adapter)?.
+                        notifyItemRangeChanged(0,app.landmarks.findAll().size)
             }
         }
 }
