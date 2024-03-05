@@ -2,6 +2,7 @@ package com.example.historicallandmarksplacemark.models
 
 import android.content.Context
 import android.net.Uri
+import com.example.historicallandmarksplacemark.adapters.LandmarkAdapter
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import com.example.historicallandmarksplacemark.helpers.*

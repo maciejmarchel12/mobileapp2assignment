@@ -14,6 +14,25 @@ interface LandmarkListener {
 class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
                                   private val listener: LandmarkListener) :
     RecyclerView.Adapter<LandmarkAdapter.MainHolder>() {
+
+    private var originalLandmarks: MutableList<LandmarkModel> = landmarks.toMutableList()
+    private var filteredLandmarks: MutableList<LandmarkModel> = originalLandmarks
+
+    //Search Function
+    fun filter(query: String) {
+        filteredLandmarks = if (query.isBlank()) {
+            originalLandmarks
+        } else {
+            originalLandmarks.filter {
+                it.title.contains(query, ignoreCase = true) || it.description.contains(
+                    query,
+                    ignoreCase = true
+                )
+            }.toMutableList()
+        }
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardLandmarkBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,7 +45,7 @@ class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
         holder.bind(landmark, listener)
     }
 
-    override fun getItemCount(): Int = landmarks.size
+    override fun getItemCount(): Int = filteredLandmarks.size
 
     class MainHolder(private val binding : CardLandmarkBinding) :
         RecyclerView.ViewHolder(binding.root) {
