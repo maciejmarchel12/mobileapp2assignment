@@ -10,6 +10,7 @@
     <string name="menu_cancelLandmark">Cancel</string>
     <string name="enter_landmark_title">Enter a landmark title</string>
     <string name="save_landmark">Save Landmark</string>
+    <string name="menu_deleteLandmark">Delete</string>
 
     <!-- Images -->
 
