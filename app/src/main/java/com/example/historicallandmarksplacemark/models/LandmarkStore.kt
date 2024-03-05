@@ -7,4 +7,6 @@ interface LandmarkStore {
     fun update(landmark: LandmarkModel)
 
     fun delete(landmark: LandmarkModel)
+
+    fun findById(id:Long) : LandmarkModel?
 }

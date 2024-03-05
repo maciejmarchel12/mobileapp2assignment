@@ -41,4 +41,9 @@ class LandmarkMemStore : LandmarkStore {
     override fun delete(landmark: LandmarkModel) {
         landmarks.remove(landmark)
     }
+
+    override fun findById(id:Long) : LandmarkModel? {
+        val foundLandmark: LandmarkModel? = landmarks.find { it.id == id }
+        return foundLandmark
+    }
 }

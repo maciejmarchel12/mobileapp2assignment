@@ -30,6 +30,11 @@ class LandmarkJSONStore(private val context: Context) : LandmarkStore {
         }
     }
 
+    override fun findById(id:Long) : LandmarkModel? {
+        val foundLandmark: LandmarkModel? = landmarks.find { it.id == id }
+        return foundLandmark
+    }
+
     override fun findAll(): MutableList<LandmarkModel> {
         logAll()
         return landmarks
