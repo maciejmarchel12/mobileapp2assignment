@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.text.toHtml
 import com.example.historicallandmarksplacemark.R
 import com.example.historicallandmarksplacemark.databinding.ActivityHlBinding
 import com.example.historicallandmarksplacemark.helpers.showImagePicker
@@ -46,6 +47,9 @@ class HLActivity : AppCompatActivity() {
             landmark = intent.extras?.getParcelable("landmark_edit")!!
             binding.landmarkTitle.setText(landmark.title)
             binding.description.setText(landmark.description)
+            binding.landmarkPreserve.setText(landmark.preserve)
+            binding.landmarkLink.setText(landmark.link)
+            binding.timePeriod.setText(landmark.timePeriod.toString())
             Picasso.get()
                 .load(landmark.image)
                 .into(binding.landmarkImage)
@@ -58,6 +62,9 @@ class HLActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             landmark.title = binding.landmarkTitle.text.toString()
             landmark.description = binding.description.text.toString()
+            landmark.preserve = binding.landmarkPreserve.text.toString()
+            landmark.link = binding.landmarkLink.text.toString()
+            landmark.timePeriod = Integer.parseInt(binding.timePeriod.text.toString())
 
             if (landmark.title.isEmpty()) {
                 Snackbar.make(it, R.string.enter_landmark_title, Snackbar.LENGTH_LONG)

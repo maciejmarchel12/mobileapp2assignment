@@ -53,6 +53,9 @@ class LandmarkJSONStore(private val context: Context) : LandmarkStore {
             foundLandmark.title = landmark.title
             foundLandmark.description = landmark.description
             foundLandmark.image = landmark.image
+            foundLandmark.preserve = landmark.preserve
+            foundLandmark.link = landmark.link
+            foundLandmark.timePeriod = landmark.timePeriod
             foundLandmark.lat = landmark.lat
             foundLandmark.lng = landmark.lng
             foundLandmark.zoom = landmark.zoom

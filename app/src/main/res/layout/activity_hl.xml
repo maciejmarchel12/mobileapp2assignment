@@ -27,10 +27,10 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="391dp"
+        android:layout_height="723dp"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -40,23 +40,44 @@
             android:layout_width="365dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="76dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="@string/hint_landmarkTitle"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/landmarkLink"
+            android:layout_width="365dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/hint_landmarkLink"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/landmarkPreserve" />
+
+        <EditText
+            android:id="@+id/landmarkPreserve"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:hint="@string/hint_landmarkPreserve"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
 
         <EditText
             android:id="@+id/description"
             android:layout_width="365dp"
             android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="@string/hint_landmarkDescription"
             android:inputType="textPersonName"
@@ -68,12 +89,13 @@
             android:id="@+id/btnAdd"
             android:layout_width="365dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/button_addLandmark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
+            app:layout_constraintTop_toBottomOf="@+id/landmarkLink" />
 
         <Button
             android:id="@+id/chooseImage"
@@ -98,19 +120,31 @@
 
         <ImageView
             android:id="@+id/landmarkImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="303dp"
+            android:layout_height="275dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/landmarkLocation"
-            app:layout_constraintVertical_bias="0.173"
+            app:layout_constraintVertical_bias="0.851"
             app:srcCompat="@drawable/ic_launcher_background" />
+
+        <EditText
+            android:id="@+id/timePeriod"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="@string/hint_landmarkTimePeriod"
+            app:layout_constraintEnd_toStartOf="@+id/landmarkPreserve"
+            app:layout_constraintHorizontal_bias="0.173"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
