@@ -79,6 +79,9 @@ class LandmarkMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListene
         val landmark = app.landmarks.findById(tag)
         contentBinding.currentTitle.text = landmark!!.title
         contentBinding.currentDescription.text = landmark.description
+        contentBinding.currentLink.text = landmark.link
+        contentBinding.currentPreserve.text = landmark.preserve
+        contentBinding.currentTimePeriod.text = landmark.timePeriod.toString()
         Picasso.get().load(landmark.image).into(contentBinding.currentImage)
         return false
     }

@@ -34,6 +34,9 @@ class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
         fun bind(landmark: LandmarkModel, listener: LandmarkListener) {
             binding.landmarkTitle.text = landmark.title
             binding.description.text = landmark.description
+            binding.landmarkPreserve.text = landmark.preserve
+            binding.landmarkLink.text = landmark.link
+            binding.timePeriod.setText(landmark.timePeriod.toString())
             Picasso.get().load(landmark.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onLandmarkClick(landmark,adapterPosition)}
         }
