@@ -18,6 +18,7 @@ import com.example.historicallandmarksplacemark.models.LandmarkModel
 
 class LandmarkListActivity : AppCompatActivity(), LandmarkListener {
 
+    private var position: Int = 0
     lateinit var app: MainApp
     private lateinit var binding: ActivityLandmarkListBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +61,10 @@ class LandmarkListActivity : AppCompatActivity(), LandmarkListener {
             }
         }
 
-    override fun onLandmarkClick(landmark: LandmarkModel) {
+    override fun onLandmarkClick(landmark: LandmarkModel, pos: Int) {
         val launcherIntent = Intent(this, HLActivity::class.java)
         launcherIntent.putExtra("landmark_edit", landmark)
+        position = pos
         getClickResult.launch(launcherIntent)
     }
 
@@ -74,5 +76,7 @@ class LandmarkListActivity : AppCompatActivity(), LandmarkListener {
                 (binding.recyclerView.adapter)?.
                         notifyItemRangeChanged(0,app.landmarks.findAll().size)
             }
+            else //deleting
+                if (it.resultCode == 99) (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 }

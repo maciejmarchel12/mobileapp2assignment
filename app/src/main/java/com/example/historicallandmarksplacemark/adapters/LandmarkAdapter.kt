@@ -8,8 +8,9 @@ import com.example.historicallandmarksplacemark.models.LandmarkModel
 import com.squareup.picasso.Picasso
 
 interface LandmarkListener {
-    fun onLandmarkClick(landmark: LandmarkModel)
+    fun onLandmarkClick(landmark: LandmarkModel, position: Int)
 }
+
 class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
                                   private val listener: LandmarkListener) :
     RecyclerView.Adapter<LandmarkAdapter.MainHolder>() {
@@ -34,7 +35,7 @@ class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
             binding.landmarkTitle.text = landmark.title
             binding.description.text = landmark.description
             Picasso.get().load(landmark.image).resize(200,200).into(binding.imageIcon)
-            binding.root.setOnClickListener { listener.onLandmarkClick(landmark)}
+            binding.root.setOnClickListener { listener.onLandmarkClick(landmark,adapterPosition)}
         }
     }
 }

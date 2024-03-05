@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso
 @Suppress("DEPRECATION")
 class HLActivity : AppCompatActivity() {
 
+    var edit = false
     private lateinit var binding: ActivityHlBinding
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
@@ -29,7 +30,6 @@ class HLActivity : AppCompatActivity() {
     lateinit var app: MainApp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var edit = false
         binding = ActivityHlBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
@@ -75,7 +75,7 @@ class HLActivity : AppCompatActivity() {
         //Map Button
         binding.chooseImage.setOnClickListener {
             i("Select image")
-            showImagePicker(imageIntentLauncher)
+            showImagePicker(imageIntentLauncher,this)
         }
 
         //Location Button
@@ -94,11 +94,17 @@ class HLActivity : AppCompatActivity() {
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_landmark, menu)
+        if (edit) menu.getItem(0).isVisible = true
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.item_delete -> {
+                setResult(99)
+                app.landmarks.delete(landmark)
+                finish()
+            }
             R.id.item_cancel -> { finish() }
         }
         return super.onOptionsItemSelected(item)
@@ -112,13 +118,18 @@ class HLActivity : AppCompatActivity() {
                 when(result.resultCode){
                     RESULT_OK -> {
                         if (result.data != null) {
-                            i("Got result ${result.data!!.data}")
-                            landmark.image = result.data!!.data!!
+                            i("Got Result ${result.data!!.data}")
+
+                            val image = result.data!!.data!!
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            landmark.image = image
+
                             Picasso.get()
-                                   .load(landmark.image)
-                                   .into(binding.landmarkImage)
+                                .load(landmark.image)
+                                .into(binding.landmarkImage)
                             binding.chooseImage.setText(R.string.change_landmark_image)
-                        } //end of if statement
+                        } // end of if statement
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }

@@ -5,4 +5,6 @@ interface LandmarkStore {
     fun create(landmark: LandmarkModel)
 
     fun update(landmark: LandmarkModel)
+
+    fun delete(landmark: LandmarkModel)
 }
