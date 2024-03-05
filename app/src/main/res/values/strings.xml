@@ -22,6 +22,12 @@
     <!-- Map -->
     <string name="button_setLocation" tools:ignore="ExtraTranslation">Set Location</string>
     <string name="title_activity_map" tools:ignore="ExtraTranslation">MapActivity</string>
+    <string name="title_activity_landmark_maps">Map of Landmarks</string>
 
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
 </resources>
