@@ -28,7 +28,9 @@ class HLActivity : AppCompatActivity() {
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var landmark = LandmarkModel() //Model integration
     var location = Location(52.245696, -7.139102, 15f) //Location
+
     lateinit var app: MainApp
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHlBinding.inflate(layoutInflater)

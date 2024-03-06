@@ -14,6 +14,10 @@ interface LandmarkListener {
 class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
                                   private val listener: LandmarkListener) :
     RecyclerView.Adapter<LandmarkAdapter.MainHolder>() {
+
+    //Search
+    var filteredLandmarks : List<LandmarkModel> = landmarks
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardLandmarkBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,9 +25,16 @@ class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
         return MainHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MainHolder, position: Int) {
+/*    override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val landmark = landmarks[holder.adapterPosition]
         holder.bind(landmark, listener)
+    }*/
+
+    override fun onBindViewHolder(holder: MainHolder, position: Int) {
+        if (position in 0 until filteredLandmarks.size) {
+            val landmark = filteredLandmarks[position]
+            holder.bind(landmark, listener)
+        }
     }
 
     override fun getItemCount(): Int = landmarks.size
@@ -40,5 +51,16 @@ class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
             Picasso.get().load(landmark.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onLandmarkClick(landmark,adapterPosition)}
         }
+    }
+
+    //Search Filter
+    fun filter(query: String) {
+        filteredLandmarks = landmarks.filter {
+            it.title.contains(query, ignoreCase = true) ||
+            it.description.contains(query, ignoreCase = true) ||
+            it.preserve.contains(query, ignoreCase = true) ||
+            it.link.contains(query, ignoreCase = true)
+        }
+        notifyDataSetChanged()
     }
 }

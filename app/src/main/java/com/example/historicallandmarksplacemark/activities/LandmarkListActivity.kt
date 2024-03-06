@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.SearchView
 import com.example.historicallandmarksplacemark.R
 import com.example.historicallandmarksplacemark.main.MainApp
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,6 +22,8 @@ class LandmarkListActivity : AppCompatActivity(), LandmarkListener {
     private var position: Int = 0
     lateinit var app: MainApp
     private lateinit var binding: ActivityLandmarkListBinding
+    private lateinit var landmarkAdapter: LandmarkAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLandmarkListBinding.inflate(layoutInflater)
@@ -32,12 +35,34 @@ class LandmarkListActivity : AppCompatActivity(), LandmarkListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-       // binding.recyclerView.adapter = LandmarkAdapter(app.landmarks)
-        binding.recyclerView.adapter = LandmarkAdapter(app.landmarks.findAll(),this)
+
+        // binding.recyclerView.adapter = LandmarkAdapter(app.landmarks)
+        // binding.recyclerView.adapter = LandmarkAdapter(app.landmarks.findAll(),this)
+
+        landmarkAdapter = LandmarkAdapter(app.landmarks.findAll(), this).apply {
+            filteredLandmarks = app.landmarks.findAll()
+        }
+
+        binding.recyclerView.adapter = landmarkAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        val searchItem = menu.findItem(R.id.item_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                landmarkAdapter.filter(newText.orEmpty())
+                return true
+            }
+        })
+
         return super.onCreateOptionsMenu(menu)
     }
 
