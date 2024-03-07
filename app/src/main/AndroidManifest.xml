@@ -17,6 +17,18 @@
         android:theme="@style/Theme.HistoricalLandmarksPlacemark"
         tools:targetApi="31">
         <activity
+            android:name=".main.SplashScreen"
+            android:theme="@style/SplashScreen"
+            android:exported="true">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+        </activity>
+        <activity
             android:name=".views.map.LandmarkMapView"
             android:exported="false"
             android:label="@string/title_activity_landmark_maps"
@@ -33,11 +45,6 @@
         <activity
             android:name=".views.landmarklist.LandmarkListView"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".views.landmark.LandmarkView"
