@@ -68,6 +68,20 @@ class LandmarkView : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.item_save -> {
+                if (binding.landmarkTitle.text.toString().isEmpty()) {
+                    Snackbar.make(binding.root, R.string.enter_landmark_title, Snackbar.LENGTH_LONG)
+                        .show()
+                } else {
+                    presenter.doAddOrSave(
+                        binding.landmarkTitle.text.toString(),
+                        binding.description.text.toString(),
+                        binding.landmarkPreserve.text.toString(),
+                        binding.landmarkLink.text.toString(),
+                        binding.timePeriod.text.toString().toInt()
+                    )
+                }
+            }
             R.id.item_delete -> {
                 presenter.doDelete()
             }

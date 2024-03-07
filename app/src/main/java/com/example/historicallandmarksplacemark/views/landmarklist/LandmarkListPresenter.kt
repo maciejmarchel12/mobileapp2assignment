@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.historicallandmarksplacemark.activities.LandmarkMapsActivity
+import com.example.historicallandmarksplacemark.views.map.LandmarkMapView
 import com.example.historicallandmarksplacemark.main.MainApp
 import com.example.historicallandmarksplacemark.models.LandmarkModel
 import com.example.historicallandmarksplacemark.views.landmark.LandmarkView
@@ -39,7 +39,7 @@ class LandmarkListPresenter(val view: LandmarkListView) {
     }
 
     fun doShowLandmarkMap() {
-        val launcherIntent = Intent(view, LandmarkMapsActivity::class.java)
+        val launcherIntent = Intent(view, LandmarkMapView::class.java)
         mapIntentLauncher.launch(launcherIntent)
     }
 

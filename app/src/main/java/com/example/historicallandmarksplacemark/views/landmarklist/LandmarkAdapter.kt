@@ -1,4 +1,4 @@
-package com.example.historicallandmarksplacemark.adapters
+package com.example.historicallandmarksplacemark.views.landmarklist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +13,8 @@ interface LandmarkListener {
 }
 
 class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
-                                  private val listener: LandmarkListener) :
+                                  private val listener: LandmarkListener
+) :
     RecyclerView.Adapter<LandmarkAdapter.MainHolder>() {
 
     //Search

@@ -8,8 +8,6 @@ import android.widget.SearchView
 import com.example.historicallandmarksplacemark.R
 import com.example.historicallandmarksplacemark.main.MainApp
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.historicallandmarksplacemark.adapters.LandmarkAdapter
-import com.example.historicallandmarksplacemark.adapters.LandmarkListener
 import com.example.historicallandmarksplacemark.databinding.ActivityLandmarkListBinding
 import com.example.historicallandmarksplacemark.models.LandmarkModel
 import timber.log.Timber.i
