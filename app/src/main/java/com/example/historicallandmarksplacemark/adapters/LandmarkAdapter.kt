@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso
 
 interface LandmarkListener {
     fun onLandmarkClick(landmark: LandmarkModel, position: Int)
+    fun showLandmarks(allLandmarks: List<LandmarkModel>)
 }
 
 class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
@@ -57,9 +58,10 @@ class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
     fun filter(query: String) {
         filteredLandmarks = landmarks.filter {
             it.title.contains(query, ignoreCase = true) ||
-            it.description.contains(query, ignoreCase = true) ||
-            it.preserve.contains(query, ignoreCase = true) ||
-            it.link.contains(query, ignoreCase = true)
+                    it.description.contains(query, ignoreCase = true) ||
+                    it.preserve.contains(query, ignoreCase = true) ||
+                    it.link.contains(query, ignoreCase = true) ||
+                    it.timePeriod.toString().contains(query, ignoreCase = true)
         }
         notifyDataSetChanged()
     }
