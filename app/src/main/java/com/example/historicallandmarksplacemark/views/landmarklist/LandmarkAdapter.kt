@@ -1,4 +1,4 @@
-package com.example.historicallandmarksplacemark.adapters
+package com.example.historicallandmarksplacemark.views.landmarklist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,10 +9,12 @@ import com.squareup.picasso.Picasso
 
 interface LandmarkListener {
     fun onLandmarkClick(landmark: LandmarkModel, position: Int)
+    fun showLandmarks(allLandmarks: List<LandmarkModel>)
 }
 
 class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
-                                  private val listener: LandmarkListener) :
+                                  private val listener: LandmarkListener
+) :
     RecyclerView.Adapter<LandmarkAdapter.MainHolder>() {
 
     //Search
@@ -57,9 +59,10 @@ class LandmarkAdapter constructor(private var landmarks: List<LandmarkModel>,
     fun filter(query: String) {
         filteredLandmarks = landmarks.filter {
             it.title.contains(query, ignoreCase = true) ||
-            it.description.contains(query, ignoreCase = true) ||
-            it.preserve.contains(query, ignoreCase = true) ||
-            it.link.contains(query, ignoreCase = true)
+                    it.description.contains(query, ignoreCase = true) ||
+                    it.preserve.contains(query, ignoreCase = true) ||
+                    it.link.contains(query, ignoreCase = true) ||
+                    it.timePeriod.toString().contains(query, ignoreCase = true)
         }
         notifyDataSetChanged()
     }

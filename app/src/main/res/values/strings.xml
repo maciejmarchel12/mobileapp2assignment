@@ -14,6 +14,7 @@
     <string name="hint_landmarkPreserve">Enter Preservation Type</string>
     <string name="hint_landmarkTimePeriod">Enter Time Period</string>
     <string name="hint_landmarkLink">Enter Link</string>
+    <string name="menu_saveLandmark">Save</string>
 
     <!-- Images -->
 

@@ -17,7 +17,7 @@
         android:theme="@style/Theme.HistoricalLandmarksPlacemark"
         tools:targetApi="31">
         <activity
-            android:name=".activities.LandmarkMapsActivity"
+            android:name=".views.map.LandmarkMapView"
             android:exported="false"
             android:label="@string/title_activity_landmark_maps"
             android:theme="@style/Theme.HistoricalLandmarksPlacemark" />
@@ -27,11 +27,11 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".activities.MapActivity"
+            android:name=".views.editlocation.EditLocationView"
             android:exported="false"
             android:label="@string/title_activity_map" />
         <activity
-            android:name=".activities.LandmarkListActivity"
+            android:name=".views.landmarklist.LandmarkListView"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HLActivity"
+            android:name=".views.landmark.LandmarkView"
             android:exported="true" />
     </application>
 
